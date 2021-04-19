@@ -1,3 +1,258 @@
-<h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%= user.first_name + ' ' + user.last_name %></p>
-<a href="/user/logout" class="btn btn-secondary">Logout</a>
+<div class="modal fade" id="addDataModal" tabindex="-1" role="dialog" aria-labelledby="addDataModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createBucketModalLabel">Daily Diabetes Health Check</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% if(typeof addHealthCheckErrors != 'undefined') { %>
+          <% addHealthCheckErrors.forEach(function(error) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <%= error.msg %>
+            </div>
+          <% }); %>
+        <% } %>
+        <form action="/dailyHealthCheck/add" method="POST">
+          <div class="form-group">
+            <label for="date">Date</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              class="form-control"
+              required
+            />
+          </div>
+          
+          <div class="card mb-2">
+            <div class="card-header hover-pointer" data-toggle="collapse" href="#foodContent" role="button" aria-expanded="false" aria-controls="foodContent">
+              Food
+            </div>
+            <div id="foodContent" class="collapse">
+              <div class="card-body">
+                
+                <div class="form-group">
+                  <label for="carbohydrate">Carbohydrate (g)</label>
+                  <input
+                    type="number"
+                    id="carbohydrate"
+                    name="carbohydrate"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="fat">Fat (g)</label>
+                  <input
+                    type="number"
+                    id="fat"
+                    name="fat"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="protein">Protein (g)</label>
+                  <input
+                    type="number"
+                    id="protein"
+                    name="protein"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="caffeine">Caffeine (g)</label>
+                  <input
+                    type="number"
+                    id="caffeine"
+                    name="caffeine"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="alcohol">Alcohol (standard drinks)</label>
+                  <input
+                    type="number"
+                    id="alcohol"
+                    name="alcohol"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="water">Water (mL)</label>
+                  <input
+                    type="number"
+                    id="water"
+                    name="water"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-2">
+            <div class="card-header hover-pointer" data-toggle="collapse" href="#activityContent" role="button" aria-expanded="false" aria-controls="activityContent">
+              Activity
+            </div>
+            <div id="activityContent" class="collapse">
+              <div class="card-body">
+                
+                <div class="form-group">
+                  <label for="light">Light Exercise (min)</label>
+                  <input
+                    type="number"
+                    id="light"
+                    name="light"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="high">High Intensity Exercise (min)</label>
+                  <input
+                    type="number"
+                    id="high"
+                    name="high"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-2">
+            <div class="card-header hover-pointer" data-toggle="collapse" href="#biologicalContent" role="button" aria-expanded="false" aria-controls="biologicalContent">
+              Biological
+            </div>
+            <div id="biologicalContent" class="collapse">
+              <div class="card-body">
+                
+                <div class="form-group">
+                  <label for="sleep">Sleep (min)</label>
+                  <input
+                    type="number"
+                    id="sleep"
+                    name="sleep"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="stress">Stress (0-10)</label>
+                  <input
+                    type="number"
+                    id="stress"
+                    name="stress"
+                    min="0"
+                    max="10"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    id="hypoglycemia"
+                    name="hypoglycemia"
+                    class="form-check-input"
+                  />
+                  <label class="form-check-label" for="hypoglycemia">Hypoglycemia</label>
+                </div>
+
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    id="infusion"
+                    name="infusion"
+                    class="form-check-input"
+                  />
+                  <label class="form-check-label" for="infusion">Infusion Set Issues</label>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-2">
+            <div class="card-header hover-pointer" data-toggle="collapse" href="#environmentalContent" role="button" aria-expanded="false" aria-controls="environmentalContent">
+              Environmental
+            </div>
+            <div id="environmentalContent" class="collapse">
+              <div class="card-body">
+                
+                <div class="form-group">
+                  <label for="temperature">Temperature (&#730;F)</label>
+                  <input
+                    type="number"
+                    id="temperature"
+                    name="temperature"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="altitude">Altitude (ft)</label>
+                  <input
+                    type="number"
+                    id="altitude"
+                    name="altitude"
+                    class="form-control"
+                    placeholder=0
+                  />
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Submit Information</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <h1 class="mt-4">Dashboard</h1>
+      <p class="lead mb-3">Welcome <%= user.first_name + ' ' + user.last_name %></p>
+      <% if(success_msg != '') { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <%= success_msg %>
+        </div>
+      <% } %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDataModal">Daily Diabetes Health Check</button>
+    </div>
+  </div>
+</div>
+
+<% if ( typeof scripts !== 'undefined') { %>
+  <% scripts.forEach(function(script){ %>
+      <script src="/<%- script %>"></script>
+  <% }); %>
+<% } %>
