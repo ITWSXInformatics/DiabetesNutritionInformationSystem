@@ -39,6 +39,12 @@ const HealthCheckSchema = new mongoose.Schema({
   stress: {
     type: String
   },
+  hypoglycemia: {
+    type: Boolean
+  },
+  infusion: {
+    type: Boolean
+  },
   temperature: {
     type: String
   },

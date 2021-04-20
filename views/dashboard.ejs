@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="caffeine">Caffeine (g)</label>
+                  <label for="caffeine">Caffeine (mg)</label>
                   <input
                     type="number"
                     id="caffeine"
@@ -225,7 +225,7 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary btn-block">Submit Information</button>
+          <button type="submit" class="btn btn-primary btn-block">Submit Health Check</button>
         </form>
       </div>
     </div>
@@ -244,9 +244,257 @@
       <% } %>
     </div>
   </div>
-  <div class="row">
+  <div class="row mb-4">
     <div class="col">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDataModal">Daily Diabetes Health Check</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h3>Health Checks</h3>
+      <div class="row">
+        
+        <% if(healthchecks.length == 0) { %>
+          <div class="col">
+            <p class="text-muted"> No health checks recorded. </p>
+          </div>
+        <% } %>
+        <% healthchecks.forEach(function(hc){  %>
+          <div class="col-md-3 mb-4">
+            <div class="card">
+              <div class="card-header">
+                <button type="button" class="close delete-hc" aria-label="Delete HealthCheck" data-date="<%-hc.date%>">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="card-title m-0"><%- hc.date.substring(5, 7) + '/' + hc.date.substring(8, 10) + '/' + hc.date.substring(0, 4)%></h5>
+              </div>
+              <div class="card-body">
+                
+                <a class="btn btn-success w-100" data-toggle="collapse" href="#content<%-hc.date%>" role="button" aria-expanded="false" aria-controls="content<%-hc.date%>">Low Risk</a>
+
+                <div class="collapse mt-4" id="content<%-hc.date%>">
+                
+                  <div class="card mb-2">
+                    <div class="card-header hover-pointer" data-toggle="collapse" href="#foodContent<%-hc.date%>" role="button" aria-expanded="false" aria-controls="foodContent<%-hc.date%>">
+                      Food
+                    </div>
+                    <div id="foodContent<%-hc.date%>" class="collapse">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Carbohydrate</span>
+                              <% if(hc.carbohydrate == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.carbohydrate%> g</span>
+                              <% } %>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Fat</span>
+                              <% if(hc.fat == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.fat%> g</span>
+                              <% } %>
+                            </p>                     
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Protein</span>
+                              <% if(hc.protein == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.protein%> g</span>
+                              <% } %>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Caffeine</span>
+                              <% if(hc.caffeine == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.caffeine%> mg</span>
+                              <% } %>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Alcohol</span>
+                              <% if(hc.alcohol == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.alcohol%> standard drinks</span>
+                              <% } %>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Water</span>
+                              <% if(hc.water == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.water%> mL</span>
+                              <% } %>
+                            </p>
+                          </div>
+                        </div>
+        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-2">
+                    <div class="card-header hover-pointer" data-toggle="collapse" href="#activityContent<%-hc.date%>" role="button" aria-expanded="false" aria-controls="activityContent<%-hc.date%>">
+                      Activity
+                    </div>
+                    <div id="activityContent<%-hc.date%>" class="collapse">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Light Intensity Exercise</span>
+                              <% if(hc.light == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.light%> min</span>
+                              <% } %>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">High Intensity Exercise</span>
+                              <% if(hc.high == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.high%> min</span>
+                              <% } %>
+                            </p>                     
+                          </div>
+                        </div>
+        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-2">
+                    <div class="card-header hover-pointer" data-toggle="collapse" href="#biologicalContent<%-hc.date%>" role="button" aria-expanded="false" aria-controls="biologicalContent<%-hc.date%>">
+                      Biological
+                    </div>
+                    <div id="biologicalContent<%-hc.date%>" class="collapse">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Sleep</span>
+                              <% if(hc.sleep == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.sleep%> min</span>
+                              <% } %>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Stress</span>
+                              <% if(hc.stress == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.stress%> (0-10))</span>
+                              <% } %>
+                            </p>                     
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Hypoglycemia</span>
+                              <span class="float-right"><%-hc.hypoglycemia%></span>
+                            </p>                     
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Infusion Set Issues</span>
+                              <span class="float-right"><%-hc.infusion%></span>
+                            </p>                     
+                          </div>
+                        </div>
+        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-2">
+                    <div class="card-header hover-pointer" data-toggle="collapse" href="#environmentalContent<%-hc.date%>" role="button" aria-expanded="false" aria-controls="environmentalContent<%-hc.date%>">
+                      Environmental
+                    </div>
+                    <div id="environmentalContent<%-hc.date%>" class="collapse">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Temperature</span>
+                              <% if(hc.temperature == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.temperature%> &#730;F</span>
+                              <% } %>
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <p>
+                              <span class="float-left font-weight-bold">Altitude</span>
+                              <% if(hc.altitude == "") {%>
+                                <span class="float-right">N/A</span>
+                              <% }else{ %>
+                                <span class="float-right"><%-hc.altitude%> ft)</span>
+                              <% } %>
+                            </p>                     
+                          </div>
+                        </div>
+        
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
     </div>
   </div>
 </div>
